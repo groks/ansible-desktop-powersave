@@ -1,0 +1,56 @@
+---
+
+- name: disable watchdog
+  sysctl: name=kernel.watchdog value=0
+
+- name: disable nmi_watchdog
+  sysctl: name=kernel.nmi_watchdog value=0
+
+- name: wait some time before flushing disk buffers
+  sysctl: name=vm.dirty_writeback_centisecs value={{ desktop_powersave_dirty_writeback_centisecs }}
+
+- name: rc.local.powersave script
+  copy: src=rc.local.powersave dest=/etc/rc.d/ owner=root group=root mode=0755
+
+- name: rc.local.powersave systemd config
+  copy: src=rc-local-powersave.service dest=/etc/systemd/system/ owner=root group=root mode=0644
+  notify: systemd daemon-reload
+
+- name: enable rc-local-powersave.service
+  service: name=rc-local-powersave enabled=yes
+
+- name: intel graphics power saving
+  copy:
+    content: |
+      options i915 modeset=1 i915_enable_rc6=1 i915_enable_fbc=1 lvds_downclock=1
+    dest: /etc/modprobe.d/i915.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+    update initrd
+
+- name: intel wireless power saving
+  copy:
+    content: |
+      options iwlagn power_save=1 power_level=5
+    dest: /etc/modprobe.d/iwlagn.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+    update initrd
+
+- name: intel sound power saving
+  copy:
+    content: |
+      options snd_hda_intel power_save=1 power_save_controller=Y
+    dest: /etc/modprobe.d/snd_hda_intel.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+    update initrd
+
+- name: install powertop
+  yum: name=powertop state=present

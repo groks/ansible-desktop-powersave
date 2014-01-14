@@ -1,0 +1,7 @@
+---
+
+- name: systemd daemon-reload
+  command: systemctl --system daemon-reload
+
+- name: update initrd
+  command: dracut -f

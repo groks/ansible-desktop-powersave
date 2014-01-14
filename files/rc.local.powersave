@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# PCI devices:
+for c in  /sys/bus/pci/devices/*/power/control; do echo auto > $c; done
+
+# SATA:
+for h in /sys/class/scsi_host/*/link_power_management_policy; do echo min_power > $h; done
+
+# Turn off Wake On LAN:
+ethtool -s em1 wol d

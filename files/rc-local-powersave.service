@@ -1,0 +1,13 @@
+[Unit]
+Description=Enable more powersaving
+ConditionFileIsExecutable=/etc/rc.d/rc.local.powersave
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/etc/rc.d/rc.local.powersave
+TimeoutSec=0
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
