@@ -1,8 +1,8 @@
 desktop-powersave
 ========
 
-An [ansible role](https://galaxy.ansibleworks.com/) to enable power saving
-features on laptops with mostly Intel components.
+An [ansible role](https://galaxy.ansibleworks.com/list#/roles/222) to enable
+power saving features on laptops with mostly Intel components.
 
 - disable watchdogs which keep the laptop awake
 - delay flushes to disk which let disk sleep longer
