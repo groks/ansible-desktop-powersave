@@ -15,14 +15,14 @@ power saving features on laptops with mostly Intel components.
   - sound chip
   - wifi card
 
+The role should run fine on machines without Intel components, it just won't
+have as much effect.
+
     ---
     - hosts: localhost
 
       roles:
         - groks.desktop-powersave
-
-The role should run fine on machines without Intel components, it just won't
-have as much effect.
 
 Run `powertop` after a reboot to verify progress.
 
